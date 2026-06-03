@@ -44,7 +44,7 @@ Projeto desenvolvido para a disciplina de **Técnicas de Programação**.
 ### Pré-requisitos
 
 - [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- SQLite (local ou remoto)
+- SQL Server (local ou remoto)
 
 ### Passo a passo
 
