@@ -1,0 +1,53 @@
+@model Patudinhos.Models.Pedido
+@{
+    ViewData["Title"] = "Editar Pedido";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Pedidos", "/Pedidos"),
+        ("Editar", null)
+    };
+}
+
+<div class="cartao" style="max-width:560px;">
+    <div class="cartao-titulo">Editar Pedido</div>
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="alerta-erro"></div>
+        <input type="hidden" asp-for="Id" />
+
+        <div class="campo-grupo">
+            <label asp-for="DataPedido" class="campo-label"></label>
+            <input asp-for="DataPedido" class="campo-input" type="datetime-local" />
+            <span asp-validation-for="DataPedido" class="erro-campo"></span>
+        </div>
+
+        <div class="campo-grupo">
+            <label asp-for="Total" class="campo-label"></label>
+            <input asp-for="Total" class="campo-input" />
+            <span asp-validation-for="Total" class="erro-campo"></span>
+        </div>
+
+        <div class="campo-grupo">
+            <label asp-for="Status" class="campo-label"></label>
+            <select asp-for="Status" class="campo-input"
+                    asp-items="Html.GetEnumSelectList<Patudinhos.Models.StatusPedido>()">
+            </select>
+            <span asp-validation-for="Status" class="erro-campo"></span>
+        </div>
+
+        <div class="campo-grupo">
+            <label asp-for="UsuarioId" class="campo-label"></label>
+            <input asp-for="UsuarioId" class="campo-input" />
+            <span asp-validation-for="UsuarioId" class="erro-campo"></span>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+            <input type="submit" value="Salvar alterações" class="btn-primario" />
+            <a asp-action="Index" class="btn-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

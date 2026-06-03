@@ -1,0 +1,25 @@
+@model Patudinhos.Models.Produto
+@{
+    ViewData["Title"] = "Excluir Produto";
+}
+
+<div class="cartao" style="max-width:500px;">
+    <div class="cartao-titulo" style="color:#dc3545;">Excluir Produto</div>
+
+    <p style="font-size:14px; color:#6b6b67; margin-bottom:20px;">
+        Tem certeza que deseja excluir o produto abaixo? Esta ação não pode ser desfeita.
+    </p>
+
+    <div style="background:#fff3f3; border:1px solid #f5c6cb; border-radius:10px; padding:16px 20px; margin-bottom:24px;">
+        <div style="font-size:16px; font-weight:600; color:#1a1a18; margin-bottom:4px;">@Model.Nome</div>
+        <div style="font-size:13px; color:#6b6b67;">@Model.Categoria · R$ @Model.Preco.ToString("N2") · @Model.Estoque un.</div>
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div style="display:flex; gap:10px;">
+            <input type="submit" value="Sim, excluir" class="btn-perigo" />
+            <a asp-action="Index" class="btn-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>

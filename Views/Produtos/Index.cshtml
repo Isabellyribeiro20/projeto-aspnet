@@ -1,0 +1,87 @@
+@model IEnumerable<Patudinhos.Models.Produto>
+@{
+    ViewData["Title"] = "Produtos";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Produtos", null)
+    };
+}
+
+<div class="cartao">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid #e0ddd5;">
+        <h1 style="font-size:20px; font-weight:600; color:#1a1a18; margin:0;">Produtos</h1>
+        @if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Create" class="btn-primario">+ Novo produto</a>
+        }
+    </div>
+
+    @if (TempData["Sucesso"] != null)
+    {
+        <div style="background:#EAF3DE; border:1px solid #C0DD97; border-radius:8px; padding:10px 16px; color:#27500A; font-size:13px; margin-bottom:16px;">
+            ✅ @TempData["Sucesso"]
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <div style="text-align:center; padding:48px; color:#9b9890;">
+            <div style="font-size:40px; margin-bottom:12px;">📦</div>
+            <p>Nenhum produto cadastrado ainda.</p>
+        </div>
+    }
+    else
+    {
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Categoria</th>
+                    <th>Preço</th>
+                    <th>Estoque</th>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <th>Ações</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div style="width:40px; height:40px; border-radius:8px; background:#EAF3DE; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                                @if (!string.IsNullOrEmpty(item.FotoUrl))
+                                {
+                                    <img src="@item.FotoUrl" style="width:100%; height:100%; object-fit:cover;" />
+                                }
+                            </div>
+                        </td>
+                        <td style="font-weight:500;">@item.Nome</td>
+                        <td>@item.Categoria</td>
+                        <td style="white-space: nowrap;">R$ @item.Preco.ToString("N2")</td>
+                        <td style="white-space: nowrap;">
+                            @if (item.Estoque > 0)
+                            {
+                                <span class="badge-verde">@item.Estoque un.</span>
+                            }
+                            else
+                            {
+                                <span class="badge-cinza">Sem estoque</span>
+                            }
+                        </td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <td>
+                                <a asp-action="Edit"    asp-route-id="@item.Id" class="acao-link">Editar</a>
+                                <a asp-action="Details" asp-route-id="@item.Id" class="acao-link">Detalhes</a>
+                                <a asp-action="Delete"  asp-route-id="@item.Id" class="acao-link perigo">Excluir</a>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

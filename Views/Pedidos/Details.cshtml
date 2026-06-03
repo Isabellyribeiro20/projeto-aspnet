@@ -1,0 +1,43 @@
+@model Patudinhos.Models.Pedido
+@{
+    ViewData["Title"] = "Detalhes do Pedido";
+}
+
+<div class="cartao" style="max-width:560px;">
+    <div class="cartao-titulo">Detalhes do Pedido</div>
+
+    <dl style="display:grid; grid-template-columns:140px 1fr; gap:12px 0; font-size:14px;">
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Data</dt>
+        <dd style="color:#1a1a18; padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">@Model.DataPedido.ToString("dd/MM/yyyy HH:mm")</dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Total</dt>
+        <dd style="color:#0F6E56; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">R$ @Model.Total.ToString("N2")</dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Status</dt>
+        <dd style="padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">
+            @switch (Model.Status)
+            {
+                case Patudinhos.Models.StatusPedido.Entregue:
+                    <span class="badge-verde">Entregue</span>
+                    break;
+                case Patudinhos.Models.StatusPedido.EmTransito:
+                    <span class="badge-azul">Em trânsito</span>
+                    break;
+                case Patudinhos.Models.StatusPedido.Cancelado:
+                    <span class="badge-cinza">Cancelado</span>
+                    break;
+                default:
+                    <span class="badge-amarelo">Processando</span>
+                    break;
+            }
+        </dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0;">Usuário</dt>
+        <dd style="color:#1a1a18; padding:10px 0; margin:0; font-family:monospace; font-size:12px;">@Model.UsuarioId</dd>
+    </dl>
+
+    <div style="display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid #e0ddd5;">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-primario">Editar</a>
+        <a asp-action="Index" class="btn-secundario">Voltar à lista</a>
+    </div>
+</div>
