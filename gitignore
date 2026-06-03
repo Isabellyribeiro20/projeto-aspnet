@@ -1,0 +1,44 @@
+# ── Compilação ──────────────────────────────────────────────
+bin/
+obj/
+
+# ── Segredos e configurações sensíveis ──────────────────────
+# appsettings contém a connection string — não versionar
+appsettings.json
+appsettings.*.json
+
+# User secrets do Visual Studio / VS Code
+*.user
+*.userosscache
+*.suo
+
+# ── VS Code ─────────────────────────────────────────────────
+.vscode/
+# Exceção: manter o launch.json se quiser compartilhar config de debug
+# !.vscode/launch.json
+
+# ── Visual Studio ────────────────────────────────────────────
+.vs/
+*.rsuser
+*.sln.docstates
+
+# ── NuGet ────────────────────────────────────────────────────
+*.nupkg
+*.snupkg
+project.lock.json
+packages/
+!**/packages/build/
+
+# ── Arquivos temporários e de sistema ───────────────────────
+*.swp
+*.tmp
+*.log
+Thumbs.db
+.DS_Store
+
+# ── Imagens enviadas pelos usuários ─────────────────────────
+# Não versionar uploads — cada ambiente tem os seus
+wwwroot/img/produtos/
+
+# ── Scaffolding ──────────────────────────────────────────────
+ScaffoldingReadMe.txt
