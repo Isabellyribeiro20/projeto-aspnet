@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — Patudinhos</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+        :root {
+            --verde:       #1D9E75;
+            --verde-dark:  #0F6E56;
+            --verde-light: #EAF3DE;
+            --verde-deep:  #27500A;
+        }
+
+        body { background:#f5f4f0; font-family:'Segoe UI',system-ui,sans-serif; margin:0; }
+
+        .navbar-patudinhos {
+            background:#fff;
+            border-bottom:1px solid #e0ddd5;
+            padding:0 24px;
+            height:54px;
+            display:flex;
+            align-items:center;
+            position:sticky;
+            top:0;
+            z-index:100;
+            box-shadow:0 1px 4px rgba(0,0,0,.05);
+        }
+
+        .nav-logo {
+            display:flex; align-items:center; gap:8px;
+            text-decoration:none; margin-right:28px; flex-shrink:0;
+        }
+
+        .nav-logo-icone {
+            width:30px; height:30px; background:var(--verde);
+            border-radius:50%; display:flex; align-items:center;
+            justify-content:center; font-size:15px; color:white;
+        }
+
+        .nav-logo-nome { font-size:16px; font-weight:600; color:#1a1a18; }
+
+        .nav-links { display:flex; align-items:center; gap:2px; flex:1; }
+
+        .nav-item {
+            padding:6px 13px; font-size:13px; color:#6b6b67;
+            text-decoration:none; border-radius:6px; transition:background 0.15s;
+        }
+
+        .nav-item:hover { background:#f0ede6; color:#1a1a18; text-decoration:none; }
+
+        .nav-item.ativo { background:var(--verde-light); color:var(--verde-dark); font-weight:500; }
+
+        .nav-acoes { display:flex; align-items:center; gap:8px; margin-left:auto; }
+
+        .btn-carrinho {
+            position:relative; padding:6px 13px; font-size:13px;
+            color:#6b6b67; text-decoration:none; border-radius:6px;
+            border:1px solid #e0ddd5; background:#fff;
+            display:flex; align-items:center; gap:5px;
+            transition:border-color 0.15s;
+        }
+
+        .btn-carrinho:hover { border-color:var(--verde); color:#1a1a18; text-decoration:none; }
+
+        .cart-badge {
+            background:var(--verde); color:white;
+            border-radius:99px; font-size:10px; font-weight:600;
+            padding:1px 6px; min-width:18px; text-align:center;
+        }
+
+        .btn-entrar {
+            padding:7px 14px; font-size:13px; color:#6b6b67;
+            background:none; border:1px solid #d5d2ca; border-radius:8px;
+            text-decoration:none; transition:border-color 0.15s;
+        }
+
+        .btn-entrar:hover { border-color:#9b9890; color:#1a1a18; text-decoration:none; }
+
+        .btn-cadastrar {
+            padding:7px 14px; font-size:13px; font-weight:500; color:white;
+            background:var(--verde); border:none; border-radius:8px;
+            text-decoration:none; transition:background 0.15s;
+        }
+
+        .btn-cadastrar:hover { background:var(--verde-dark); color:white; text-decoration:none; }
+
+        .btn-sair {
+            padding:7px 14px; font-size:13px; color:#6b6b67;
+            background:none; border:1px solid #d5d2ca; border-radius:8px;
+            cursor:pointer; transition:border-color 0.15s;
+        }
+
+        .btn-sair:hover { border-color:#9b9890; color:#1a1a18; }
+
+        .usuario-nome { font-size:13px; color:#6b6b67; }
+        .usuario-nome strong { color:#1a1a18; }
+
+        .conteudo { max-width:1000px; margin:32px auto; padding:0 24px; }
+
+        .cartao { background:#fff; border:1px solid #e0ddd5; border-radius:12px; padding:28px 32px; }
+        .cartao-titulo { font-size:20px; font-weight:600; color:#1a1a18; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid #e0ddd5; }
+
+        .tabela { width:100%; border-collapse:collapse; font-size:14px; }
+        .tabela th { text-align:left; padding:10px 12px; font-size:11px; font-weight:600; color:#9b9890; text-transform:uppercase; letter-spacing:0.05em; border-bottom:1px solid #e0ddd5; }
+        .tabela td { padding:12px; color:#1a1a18; border-bottom:1px solid #f0ede6; vertical-align:middle; }
+        .tabela tr:last-child td { border-bottom:none; }
+        .tabela tr:hover td { background:#fafaf8; }
+
+        .campo-grupo { margin-bottom:16px; }
+        .campo-label { display:block; font-size:12px; font-weight:500; color:#6b6b67; margin-bottom:5px; }
+        .campo-input { width:100%; border:1px solid #d5d2ca; border-radius:8px; padding:8px 11px; font-size:14px; color:#1a1a18; background:#fff; outline:none; transition:border-color 0.15s; }
+        .campo-input:focus { border-color:var(--verde); box-shadow:0 0 0 3px rgba(29,158,117,.1); }
+
+        .btn-primario { background:var(--verde); color:white; border:none; border-radius:8px; padding:9px 18px; font-size:14px; font-weight:500; cursor:pointer; text-decoration:none; display:inline-block; transition:background 0.15s; }
+        .btn-primario:hover { background:var(--verde-dark); color:white; text-decoration:none; }
+
+        .btn-secundario { background:none; color:#6b6b67; border:1px solid #d5d2ca; border-radius:8px; padding:9px 18px; font-size:14px; cursor:pointer; text-decoration:none; display:inline-block; transition:border-color 0.15s; }
+        .btn-secundario:hover { border-color:#9b9890; color:#1a1a18; text-decoration:none; }
+
+        .btn-perigo { background:#dc3545; color:white; border:none; border-radius:8px; padding:9px 18px; font-size:14px; font-weight:500; cursor:pointer; text-decoration:none; display:inline-block; }
+        .btn-perigo:hover { background:#bb2d3b; color:white; text-decoration:none; }
+
+        .acao-link { font-size:13px; color:var(--verde-dark); text-decoration:none; margin-right:10px; }
+        .acao-link:hover { text-decoration:underline; }
+        .acao-link.perigo { color:#dc3545; }
+
+        .alerta-erro { background:#fff3f3; border:1px solid #f5c6cb; border-radius:8px; padding:10px 14px; color:#721c24; font-size:13px; margin-bottom:16px; }
+        .erro-campo { font-size:12px; color:#dc3545; margin-top:4px; }
+
+        .badge-verde   { background:#EAF3DE; color:#27500A; font-size:11px; font-weight:500; padding:3px 9px; border-radius:99px; }
+        .badge-azul    { background:#E6F1FB; color:#185FA5; font-size:11px; font-weight:500; padding:3px 9px; border-radius:99px; }
+        .badge-amarelo { background:#FAEEDA; color:#633806; font-size:11px; font-weight:500; padding:3px 9px; border-radius:99px; }
+        .badge-cinza   { background:#f0ede6; color:#6b6b67; font-size:11px; font-weight:500; padding:3px 9px; border-radius:99px; }
+
+        .rodape { text-align:center; padding:16px; font-size:12px; color:#9b9890; border-top:1px solid #e0ddd5; margin-top:48px; background:#fff; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar-patudinhos">
+    <a asp-controller="Home" asp-action="Index" class="nav-logo">
+        <div class="nav-logo-icone">🐾</div>
+        <span class="nav-logo-nome">Patudinhos</span>
+    </a>
+
+    <div class="nav-links">
+        <a asp-controller="Home" asp-action="Index"
+           class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "ativo" : "")">
+            Início
+        </a>
+        <a asp-controller="Produtos" asp-action="Index"
+           class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Produtos" ? "ativo" : "")">
+            Produtos
+        </a>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Pedidos" asp-action="Index"
+                   class="nav-item @(ViewContext.RouteData.Values["controller"]?.ToString() == "Pedidos" ? "ativo" : "")">
+                    Pedidos
+                </a>
+            }
+            else
+            {
+                <a asp-controller="Pedidos" asp-action="MeusPedidos"
+                   class="nav-item @(ViewContext.RouteData.Values["action"]?.ToString() == "MeusPedidos" ? "ativo" : "")">
+                    Meus Pedidos
+                </a>
+            }
+        }
+    </div>
+
+    <div class="nav-acoes">
+        @if (User.Identity?.IsAuthenticated == true && !User.IsInRole("Admin"))
+        {
+            <a asp-controller="Carrinho" asp-action="Index" class="btn-carrinho">
+                🛒
+                @if (ViewBag.QtdCarrinho is int q && q > 0)
+                {
+                    <span class="cart-badge">@q</span>
+                }
+            </a>
+        }
+
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <span class="usuario-nome">Olá, <strong>@User.Identity.Name</strong></span>
+            <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/" method="post" style="margin:0;">
+                <button type="submit" class="btn-sair">Sair</button>
+            </form>
+        }
+        else
+        {
+            <a asp-area="Identity" asp-page="/Account/Login"    class="btn-entrar">Entrar</a>
+            <a asp-area="Identity" asp-page="/Account/Register" class="btn-cadastrar">Cadastrar</a>
+        }
+    </div>
+</nav>
+
+@if (ViewData["Breadcrumbs"] is List<(string Label, string? Url)> breadcrumbs && breadcrumbs.Any())
+{
+    <div style="background:#f0ede6; border-bottom:1px solid #e0ddd5; padding:8px 24px; font-size:12px; color:#9b9890;">
+        <a asp-controller="Home" asp-action="Index" style="color:#1D9E75; text-decoration:none;">Início</a>
+        @foreach (var crumb in breadcrumbs)
+        {
+            <span style="margin:0 6px;">›</span>
+            @if (crumb.Url != null)
+            {
+                <a href="@crumb.Url" style="color:#1D9E75; text-decoration:none;">@crumb.Label</a>
+            }
+            else
+            {
+                <span style="color:#1a1a18;">@crumb.Label</span>
+            }
+        }
+    </div>
+}
+
+<div class="conteudo">
+    @RenderBody()
+</div>
+
+<footer class="rodape">
+    &copy; @DateTime.Now.Year — Patudinhos
+</footer>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

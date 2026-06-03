@@ -1,0 +1,87 @@
+@model Patudinhos.Models.Produto
+@{
+    ViewData["Title"] = "Novo Produto";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Produtos", "/Produtos"),
+        ("Novo produto", null)
+    };
+}
+
+<div class="cartao" style="max-width:560px;">
+    <div class="cartao-titulo">Novo Produto</div>
+
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="alerta-erro"></div>
+
+        <div class="campo-grupo">
+            <label asp-for="Nome" class="campo-label"></label>
+            <input asp-for="Nome" class="campo-input" placeholder="Ex: Ração Premium Golden" />
+            <span asp-validation-for="Nome" class="erro-campo"></span>
+        </div>
+
+        <div class="campo-grupo">
+            <label asp-for="Descricao" class="campo-label"></label>
+            <input asp-for="Descricao" class="campo-input" placeholder="Ex: 15kg — cães adultos de porte médio" />
+            <span asp-validation-for="Descricao" class="erro-campo"></span>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+            <div class="campo-grupo">
+                <label asp-for="Preco" class="campo-label"></label>
+                <input asp-for="Preco" asp-format="{0:N2}" class="campo-input" placeholder="0.00" />
+                <span asp-validation-for="Preco" class="erro-campo"></span>
+            </div>
+            <div class="campo-grupo">
+                <label asp-for="Estoque" class="campo-label"></label>
+                <input asp-for="Estoque" class="campo-input" placeholder="0" />
+                <span asp-validation-for="Estoque" class="erro-campo"></span>
+            </div>
+        </div>
+
+        <div class="campo-grupo">
+            <label asp-for="Categoria" class="campo-label"></label>
+            <select asp-for="Categoria" class="campo-input">
+                <option value="">Selecione...</option>
+                <option>Ração</option>
+                <option>Petisco</option>
+                <option>Acessório</option>
+                <option>Higiene</option>
+                <option>Brinquedo</option>
+            </select>
+            <span asp-validation-for="Categoria" class="erro-campo"></span>
+        </div>
+
+        <div class="campo-grupo">
+            <label class="campo-label">Foto do produto</label>
+            <input type="file" name="foto" class="campo-input" accept="image/*"
+                   onchange="previewFoto(this)" />
+            <div id="preview" style="margin-top:8px; display:none;">
+                <img id="preview-img" style="width:120px; height:120px; object-fit:cover; border-radius:8px; border:1px solid #e0ddd5;" />
+            </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:8px;">
+            <input type="submit" value="Salvar produto" class="btn-primario" />
+            <a asp-action="Index" class="btn-secundario">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function previewFoto(input) {
+            const preview = document.getElementById('preview');
+            const img = document.getElementById('preview-img');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = e => {
+                    img.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+}

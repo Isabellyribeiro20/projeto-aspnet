@@ -1,0 +1,145 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<Patudinhos.Models.Produto>
+@{
+    ViewData["Title"] = User.IsInRole("Admin") ? "Painel Admin" : "Catálogo";
+}
+
+@if (TempData["Sucesso"] != null)
+{
+    <div style="background:#EAF3DE; border:1px solid #C0DD97; border-radius:8px; padding:10px 16px; color:#27500A; font-size:13px; margin-bottom:16px;">
+        ✅ @TempData["Sucesso"]
+    </div>
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <!-- ── Painel Admin ── -->
+    <div style="background:#EAF3DE; border-radius:12px; padding:28px 32px; display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+        <div>
+            <div style="font-size:11px; font-weight:500; color:#3B6D11; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:6px;">Painel do Administrador</div>
+            <h1 style="font-size:24px; font-weight:600; color:#27500A; margin-bottom:6px;">Patudinhos</h1>
+            <p style="font-size:14px; color:#3B6D11; margin:0;">Gerencie produtos e pedidos da loja.</p>
+        </div>
+        <div style="font-size:64px;">🐾</div>
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+        <a asp-controller="Produtos" asp-action="Create"
+           style="background:#fff; border:1px solid #e0ddd5; border-radius:12px; padding:20px 22px; text-decoration:none; display:block;"
+           onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#e0ddd5'">
+            <div style="font-size:14px; font-weight:500; color:#1a1a18;">Novo Produto</div>
+            <div style="font-size:12px; color:#9b9890; margin-top:2px;">Cadastrar item no catálogo</div>
+        </a>
+        <a asp-controller="Pedidos" asp-action="Index"
+           style="background:#fff; border:1px solid #e0ddd5; border-radius:12px; padding:20px 22px; text-decoration:none; display:block;"
+           onmouseover="this.style.borderColor='#1D9E75'" onmouseout="this.style.borderColor='#e0ddd5'">
+            <div style="font-size:14px; font-weight:500; color:#1a1a18;">Ver Pedidos</div>
+            <div style="font-size:12px; color:#9b9890; margin-top:2px;">Gerenciar todos os pedidos</div>
+        </a>
+    </div>
+}
+else
+{
+    <!-- ── Catálogo para usuário comum ── -->
+    <div style="background:#EAF3DE; border-radius:12px; padding:28px 32px; display:flex; align-items:center; justify-content:space-between; margin-bottom:28px;">
+        <div>
+            <div style="font-size:11px; font-weight:500; color:#3B6D11; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:6px;">Bem-vindo</div>
+            <h1 style="font-size:24px; font-weight:600; color:#27500A; margin-bottom:6px;">Catálogo Patudinhos</h1>
+            <p style="font-size:14px; color:#3B6D11; margin-bottom:18px;">Produtos selecionados para o seu pet.</p>
+            <a asp-controller="Carrinho" asp-action="Index" class="btn-primario">Ver carrinho</a>
+        </div>
+        <div style="font-size:64px;">🐾</div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div style="text-align:center; padding:60px; color:#9b9890;">
+            <p>Nenhum produto disponível no momento.</p>
+        </div>
+    }
+    else
+    {
+        <!-- Filtros por categoria -->
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;">
+            <span style="font-size:12px; color:#9b9890; align-self:center;">Categoria:</span>
+            <a href="@Url.Action("Index", "Home")"
+               style="border:0.5px solid #d5d2ca; border-radius:99px; padding:4px 13px; font-size:12px; color:#6b6b67; text-decoration:none; background:@(ViewBag.CategoriaFiltro == null ? "#1D9E75" : "#fff"); color:@(ViewBag.CategoriaFiltro == null ? "white" : "#6b6b67");">
+                Todos
+            </a>
+            @foreach (var cat in new[] { "Ração", "Petisco", "Acessório", "Higiene", "Brinquedo" })
+            {
+                <a href="@Url.Action("Index", "Home", new { categoria = cat })"
+                   style="border:0.5px solid #d5d2ca; border-radius:99px; padding:4px 13px; font-size:12px; text-decoration:none; background:@(ViewBag.CategoriaFiltro == cat ? "#1D9E75" : "#fff"); color:@(ViewBag.CategoriaFiltro == cat ? "white" : "#6b6b67");">
+                    @cat
+                </a>
+            }
+        </div>
+
+        <!-- Grid de produtos -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:16px;">
+            @foreach (var p in Model)
+            {
+                <div style="background:#fff; border:1px solid #e0ddd5; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:box-shadow 0.15s;"
+                     onmouseover="this.style.boxShadow='0 4px 16px rgba(0,0,0,.08)'"
+                     onmouseout="this.style.boxShadow='none'">
+
+                    <!-- Imagem -->
+                    <div style="height:140px; background:#EAF3DE; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                        @if (!string.IsNullOrEmpty(p.FotoUrl))
+                        {
+                            <img src="@p.FotoUrl" alt="@p.Nome"
+                                 style="width:100%; height:100%; object-fit:cover;" />
+                        }
+                        else
+                        {
+                            <span style="font-size:48px;">
+                                @switch (p.Categoria)
+                                {
+                                    case "Ração":      break;
+                                    case "Petisco":    break;
+                                    case "Acessório":  break;
+                                    case "Higiene":    break;
+                                    case "Brinquedo":  break;
+                                    default:           break;
+                                }
+                            </span>
+                        }
+                    </div>
+
+                    <!-- Info -->
+                    <div style="padding:14px; flex:1; display:flex; flex-direction:column;">
+                        <div style="font-size:10px; color:#9b9890; text-transform:uppercase; letter-spacing:0.04em; margin-bottom:3px;">@p.Categoria</div>
+                        <div style="font-size:14px; font-weight:500; color:#1a1a18; margin-bottom:3px; line-height:1.3;">@p.Nome</div>
+                        <div style="font-size:12px; color:#9b9890; margin-bottom:10px; line-height:1.4;">@p.Descricao</div>
+                        <div style="margin-top:auto; padding-top:10px;">
+                            @if (p.Estoque > 0)
+                            {
+                                <span class="badge-verde" style="margin-bottom:10px; display:inline-block;">Em estoque</span>
+                            }
+                            else
+                            {
+                                <span class="badge-cinza" style="margin-bottom:10px; display:inline-block;">Sem estoque</span>
+                            }
+
+                            <div style="display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:10px;">
+                                <div style="font-size:16px; font-weight:500; color:#0F6E56;">R$ @p.Preco.ToString("N2")</div>
+                                @if (p.Estoque > 0)
+                                {
+                                    <form asp-controller="Carrinho" asp-action="Adicionar" method="post" style="margin:0;">
+                                        <input type="hidden" name="produtoId" value="@p.Id" />
+                                        <input type="hidden" name="quantidade" value="1" />
+                                        <button type="submit"
+                                                style="background:#1D9E75; color:white; border:none; border-radius:7px; padding:6px 12px; font-size:12px; cursor:pointer;">
+                                            + Carrinho
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}

@@ -1,0 +1,195 @@
+/* /Views/Shared/_Layout.cshtml.rz.scp.css */
+/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand[b-3wjhd1gi68] {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a[b-3wjhd1gi68] {
+  color: #0077cc;
+}
+
+.btn-primary[b-3wjhd1gi68] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active[b-3wjhd1gi68], .nav-pills .show > .nav-link[b-3wjhd1gi68] {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top[b-3wjhd1gi68] {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom[b-3wjhd1gi68] {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow[b-3wjhd1gi68] {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy[b-3wjhd1gi68] {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer[b-3wjhd1gi68] {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+:root[b-3wjhd1gi68] {
+  --pet-green: #1D9E75;
+  --pet-green-light: #EAF3DE;
+  --pet-green-dark: #0F6E56;
+  --pet-green-deep: #27500A;
+  --pet-green-mid: #3B6D11;
+  --pet-green-pale: #C0DD97;
+}
+
+*[b-3wjhd1gi68] { box-sizing: border-box; margin: 0; padding: 0; }
+
+.app[b-3wjhd1gi68] { font-family: var(--font-sans); background: var(--color-background-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; border: 0.5px solid var(--color-border-tertiary); }
+
+.navbar[b-3wjhd1gi68] {
+  background: var(--color-background-primary);
+  border-bottom: 0.5px solid var(--color-border-tertiary);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  height: 52px;
+}
+
+.nav-logo[b-3wjhd1gi68] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  margin-right: 32px;
+}
+
+.nav-paw[b-3wjhd1gi68] {
+  width: 30px;
+  height: 30px;
+  background: var(--pet-green);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  color: white;
+}
+
+.nav-brand[b-3wjhd1gi68] {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.nav-links[b-3wjhd1gi68] {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.nav-link[b-3wjhd1gi68] {
+  padding: 6px 14px;
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  border-radius: var(--border-radius-md);
+  transition: background 0.15s;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-link:hover[b-3wjhd1gi68] { background: var(--color-background-secondary); color: var(--color-text-primary); }
+.nav-link.active[b-3wjhd1gi68] { color: var(--pet-green-dark); font-weight: 500; background: var(--pet-green-light); }
+
+.nav-actions[b-3wjhd1gi68] {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.cart-btn[b-3wjhd1gi68] {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border: 0.5px solid var(--color-border-secondary);
+  border-radius: var(--border-radius-md);
+  background: var(--color-background-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--color-text-primary);
+}
+
+.cart-badge[b-3wjhd1gi68] {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background: var(--pet-green);
+  color: white;
+  border-radius: 50%;
+  font-size: 9px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-btn[b-3wjhd1gi68] {
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-login[b-3wjhd1gi68] {
+  background: none;
+  color: var(--color-text-secondary);
+  border: 0.5px solid var(--color-border-secondary) !important;
+  border-radius: var(--border-radius-md);
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-signup[b-3wjhd1gi68] {
+  background: var(--pet-green);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.page.active[b-3wjhd1gi68] {
+    display: block;
+}

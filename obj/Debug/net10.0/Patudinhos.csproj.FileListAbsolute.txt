@@ -1,0 +1,10 @@
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.csproj.AssemblyReference.cache
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.AssemblyInfoInputs.cache
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.AssemblyInfo.cs
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.csproj.CoreCompileInputs.cache
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.RazorAssemblyInfo.cache
+C:\Users\geeco\Downloads\GestaoPet de verdade\obj\Debug\net10.0\Patudinhos.RazorAssemblyInfo.cs

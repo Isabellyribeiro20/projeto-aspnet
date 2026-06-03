@@ -1,0 +1,39 @@
+@model Patudinhos.Models.Produto
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<div class="cartao" style="max-width:560px;">
+    <div class="cartao-titulo">Detalhes do Produto</div>
+
+    <dl style="display:grid; grid-template-columns:140px 1fr; gap:12px 0; font-size:14px;">
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Nome</dt>
+        <dd style="color:#1a1a18; padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">@Html.DisplayFor(m => m.Nome)</dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Descrição</dt>
+        <dd style="color:#1a1a18; padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">@Html.DisplayFor(m => m.Descricao)</dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Preço</dt>
+        <dd style="color:#0F6E56; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">R$ @Model.Preco.ToString("N2")</dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0; border-bottom:1px solid #f0ede6;">Estoque</dt>
+        <dd style="padding:10px 0; border-bottom:1px solid #f0ede6; margin:0;">
+            @if (Model.Estoque > 0)
+            {
+                <span class="badge-verde">@Model.Estoque unidades</span>
+            }
+            else
+            {
+                <span class="badge-cinza">Sem estoque</span>
+            }
+        </dd>
+
+        <dt style="color:#9b9890; font-weight:500; padding:10px 0;">Categoria</dt>
+        <dd style="color:#1a1a18; padding:10px 0; margin:0;">@Html.DisplayFor(m => m.Categoria)</dd>
+    </dl>
+
+    <div style="display:flex; gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid #e0ddd5;">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn-primario">Editar</a>
+        <a asp-action="Index" class="btn-secundario">Voltar à lista</a>
+    </div>
+</div>

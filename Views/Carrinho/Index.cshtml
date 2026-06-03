@@ -1,0 +1,107 @@
+@model IEnumerable<Patudinhos.Models.ItemCarrinho>
+@{
+    ViewData["Title"] = "Meu Carrinho";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Carrinho", null)
+    };
+    var total = ViewBag.Total as decimal? ?? 0;
+}
+
+<div style="display:grid; grid-template-columns:1fr 300px; gap:20px; align-items:start;">
+
+    <!-- ── Itens ── -->
+    <div class="cartao">
+        <div class="cartao-titulo">Meu Carrinho</div>
+
+        @if (!Model.Any())
+        {
+            <div style="text-align:center; padding:48px; color:#9b9890;">
+                <div style="font-size:48px; margin-bottom:12px;">🛒</div>
+                <p style="margin-bottom:16px;">Seu carrinho está vazio.</p>
+                <a asp-controller="Home" asp-action="Index" class="btn-primario">Ver produtos</a>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div style="display:flex; gap:14px; align-items:center; padding:14px 0; border-bottom:1px solid #f0ede6;">
+
+                    <!-- Foto -->
+                    <div style="width:64px; height:64px; border-radius:8px; background:#EAF3DE; flex-shrink:0; overflow:hidden; display:flex; align-items:center; justify-content:center;">
+                        @if (!string.IsNullOrEmpty(item.FotoUrl))
+                        {
+                            <img src="@item.FotoUrl" style="width:100%; height:100%; object-fit:cover;" />
+                        }
+                    </div>
+
+                    <!-- Info -->
+                    <div style="flex:1;">
+                        <div style="font-size:14px; font-weight:500; color:#1a1a18; margin-bottom:2px;">@item.Nome</div>
+                        <div style="font-size:12px; color:#9b9890;">R$ @item.Preco.ToString("N2") / un.</div>
+                    </div>
+
+                    <!-- Quantidade -->
+                    <form asp-controller="Carrinho" asp-action="AlterarQuantidade" method="post"
+                          style="display:flex; align-items:center; gap:6px;">
+                        <input type="hidden" name="produtoId" value="@item.ProdutoId" />
+                        <input type="number" name="quantidade" value="@item.Quantidade" min="1"
+                               style="width:56px; border:1px solid #d5d2ca; border-radius:6px; padding:5px 8px; font-size:13px; text-align:center;"
+                               onchange="this.form.submit()" />
+                    </form>
+
+                    <!-- Subtotal -->
+                    <div style="font-size:15px; font-weight:500; color:#0F6E56; min-width:80px; text-align:right;">
+                        R$ @item.Subtotal.ToString("N2")
+                    </div>
+
+                    <!-- Remover -->
+                    <form asp-controller="Carrinho" asp-action="Remover" method="post" style="margin:0;">
+                        <input type="hidden" name="produtoId" value="@item.ProdutoId" />
+                        <button type="submit"
+                                style="background:none; border:none; color:#dc3545; font-size:18px; cursor:pointer; padding:4px 6px;"
+                                title="Remover">✕</button>
+                    </form>
+                </div>
+            }
+
+            <div style="padding-top:12px;">
+                <a asp-controller="Home" asp-action="Index" class="btn-secundario">← Continuar comprando</a>
+            </div>
+        }
+    </div>
+
+    <!-- ── Resumo ── -->
+    @if (Model.Any())
+    {
+        <div class="cartao" style="position:sticky; top:16px;">
+            <div class="cartao-titulo">Resumo do pedido</div>
+
+            @foreach (var item in Model)
+            {
+                <div style="display:flex; justify-content:space-between; font-size:13px; padding:5px 0; color:#6b6b67;">
+                    <span>@item.Nome × @item.Quantidade</span>
+                    <span>R$ @item.Subtotal.ToString("N2")</span>
+                </div>
+            }
+
+            <hr style="border:none; border-top:1px solid #e0ddd5; margin:12px 0;" />
+
+            <div style="display:flex; justify-content:space-between; font-size:16px; font-weight:600; color:#1a1a18; margin-bottom:4px;">
+                <span>Total</span>
+                <span style="color:#0F6E56;">R$ @total.ToString("N2")</span>
+            </div>
+
+            <div style="background:#EAF3DE; border-radius:8px; padding:10px 12px; font-size:12px; color:#3B6D11; margin:14px 0;">
+                🚚 Frete grátis acima de R$ 150,00
+            </div>
+
+            <form asp-controller="Carrinho" asp-action="Finalizar" method="post">
+                <button type="submit" class="btn-primario" style="width:100%; text-align:center;">
+                    Finalizar pedido →
+                </button>
+            </form>
+        </div>
+    }
+</div>

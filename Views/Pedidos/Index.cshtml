@@ -1,0 +1,67 @@
+@model IEnumerable<Patudinhos.Models.Pedido>
+@{
+    ViewData["Title"] = "Pedidos";
+    ViewData["Breadcrumbs"] = new List<(string, string?)>
+    {
+        ("Pedidos", null)
+    };
+}
+
+<div class="cartao">
+    <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid #e0ddd5;">
+        <h1 style="font-size:20px; font-weight:600; color:#1a1a18; margin:0;">Pedidos</h1>
+        <a asp-action="Create" class="btn-primario">+ Novo pedido</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div style="text-align:center; padding:48px; color:#9b9890;">
+            <div style="font-size:40px; margin-bottom:12px;">🛒</div>
+            <p>Nenhum pedido registrado ainda.</p>
+        </div>
+    }
+    else
+    {
+        <table class="tabela">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.DataPedido.ToString("dd/MM/yyyy")</td>
+                        <td style="font-weight:500; color:#0F6E56;">R$ @item.Total.ToString("N2")</td>
+                        <td>
+                            @switch (item.Status)
+                            {
+                                case Patudinhos.Models.StatusPedido.Entregue:
+                                    <span class="badge-verde">Entregue</span>
+                                    break;
+                                case Patudinhos.Models.StatusPedido.EmTransito:
+                                    <span class="badge-azul">Em trânsito</span>
+                                    break;
+                                case Patudinhos.Models.StatusPedido.Cancelado:
+                                    <span class="badge-cinza">Cancelado</span>
+                                    break;
+                                default:
+                                    <span class="badge-amarelo">Processando</span>
+                                    break;
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit"    asp-route-id="@item.Id" class="acao-link">Editar</a>
+                            <a asp-action="Details" asp-route-id="@item.Id" class="acao-link">Detalhes</a>
+                            <a asp-action="Delete"  asp-route-id="@item.Id" class="acao-link perigo">Excluir</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
