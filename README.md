@@ -20,7 +20,7 @@ Projeto desenvolvido para a disciplina de **Técnicas de Programação**.
 | C# | 13 | Linguagem de programação |
 | Entity Framework Core | 10.0 | ORM e acesso ao banco |
 | ASP.NET Core Identity | 10.0 | Autenticação e autorização |
-| SQLite | — | Banco de dados |
+| SQL Server | — | Banco de dados |
 | Razor / CSHTML | — | Views e templates |
 
 ---
