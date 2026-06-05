@@ -84,6 +84,42 @@ O usuário administrador é criado automaticamente na primeira execução.
 
 ---
 
+## Scaffold
+
+O scaffold foi utilizado para gerar automaticamente os Controllers e Views a partir dos Models, seguindo o padrão CRUD do ASP.NET Core MVC.
+
+### Instalação das ferramentas
+
+```bash
+dotnet tool install -g dotnet-aspnet-codegenerator
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.AspNetCore.Identity.UI
+```
+
+### Geração do Identity (login e cadastro)
+
+```powershell
+dotnet aspnet-codegenerator identity --dbContext AppDbContext --files "Account.Register;Account.Login;Account.Logout"
+```
+
+Gera automaticamente as páginas de Login, Cadastro e Logout integradas ao ASP.NET Core Identity.
+
+### Geração do CRUD dos Models
+
+```powershell
+dotnet aspnet-codegenerator controller --controllerName ProdutosController --model GestaoPet.Models.Produto --dataContext GestaoPet.Areas.Identity.Data.AppDbContext -udl --relativeFolderPath Controllers
+```
+
+```powershell
+dotnet aspnet-codegenerator controller --controllerName PedidosController --model GestaoPet.Models.Pedido --dataContext GestaoPet.Areas.Identity.Data.AppDbContext -udl --relativeFolderPath Controllers
+```
+
+Cada comando gera um Controller completo com os métodos `Index`, `Details`, `Create`, `Edit` e `Delete`, além de todas as Views correspondentes.
+
+> **Observação:** no PowerShell (Windows) os comandos devem ser escritos em uma única linha. A barra invertida `\` usada para quebrar linhas no terminal Linux/Mac não é reconhecida pelo PowerShell.
+
+---
+
 ## Principais funcionalidades
 
 ### Catálogo de produtos
